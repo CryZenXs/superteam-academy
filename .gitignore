@@ -24,4 +24,24 @@ test-ledger/
 yarn-error.log
 
 # Claude local settings
-.claude/settings.local.json
+.claude/
+CLAUDE.md
+
+# Scripts and Temporary Files
+find_id.py
+find_questions_all.py
+get_agent_detail.py
+get_bounty_details.py
+get_by_slug.py
+get_questions.py
+inspect_listing.py
+submit_academy.py
+try_variations.py
+debug_keys.py
+find_id.py
+
+# Build outputs
+dist/
+build/
+.next/
+out/
