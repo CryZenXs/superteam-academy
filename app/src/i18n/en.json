@@ -10,7 +10,8 @@
         "dashboard": "Dashboard",
         "courses": "Courses",
         "leaderboard": "Leaderboard",
-        "profile": "Profile"
+        "profile": "Profile",
+        "playground": "Playground"
     },
     "hero": {
         "title": "Master the Solana Ecosystem",

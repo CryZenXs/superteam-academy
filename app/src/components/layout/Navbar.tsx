@@ -44,6 +44,10 @@ export const Navbar = () => {
                         <Trophy size={18} />
                         <span>{t('nav.leaderboard')}</span>
                     </Link>
+                    <Link href="/playground" className="flex items-center space-x-1 hover:text-solana-cyan transition-colors">
+                        <Zap size={18} className="text-solana-cyan" />
+                        <span className="text-solana-cyan underline decoration-white/20 underline-offset-4">{t('nav.playground')}</span>
+                    </Link>
                 </div>
 
                 <div className="flex items-center space-x-4">

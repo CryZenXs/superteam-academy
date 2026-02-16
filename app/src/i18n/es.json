@@ -10,7 +10,8 @@
         "dashboard": "Panel",
         "courses": "Cursos",
         "leaderboard": "Clasificación",
-        "profile": "Perfil"
+        "profile": "Perfil",
+        "playground": "Playground"
     },
     "hero": {
         "title": "Domina el Ecosistema Solana",
