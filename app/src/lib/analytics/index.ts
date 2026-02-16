@@ -1,8 +1,10 @@
 import * as Sentry from "@sentry/nextjs";
 import posthog from 'posthog-js';
 
+let isInitialized = false;
+
 export const initAnalytics = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isInitialized) {
         // Sentry Initialization
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN || "https://examplePublicKey@o0.ingest.sentry.io/0",
@@ -22,6 +24,8 @@ export const initAnalytics = () => {
                 capture_pageview: true,
             });
         }
+
+        isInitialized = true;
     }
 };
 
