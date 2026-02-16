@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useToast } from './ToastContext';
 
+import { learningService } from '@/lib/services/LearningProgressService';
+
 interface PlayerState {
     xp: number;
     level: number;
@@ -20,7 +22,7 @@ interface PlayerContextType {
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
-    const { connected } = useWallet();
+    const { connected, publicKey } = useWallet();
     const { toast } = useToast();
 
     const [player, setPlayer] = useState<PlayerState>({
@@ -30,12 +32,33 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
         completedCourses: [],
     });
 
-    // Calculate level based on XP (Level = floor(sqrt(XP / 100)) + 1)
+    // Load initial data from service
     useEffect(() => {
-        const newLevel = Math.floor(Math.sqrt(player.xp / 100)) + 1;
-        if (newLevel > player.level) {
-            setPlayer(prev => ({ ...prev, level: newLevel }));
-            toast(`LEVEL UP! Você agora é nível ${newLevel}! 🚀`, 'success');
+        const loadPlayerData = async () => {
+            if (connected && publicKey) {
+                const xp = await learningService.getXP(publicKey.toBase58());
+                const streak = await learningService.getStreak(publicKey.toBase58());
+                // Level formula from Bounty spec: floor(sqrt(xp/100))
+                // Note: Bounty spec says Level = floor(sqrt(xp/100)). 
+                // We'll use this exact formula.
+                const level = Math.floor(Math.sqrt(xp / 100)) || 1;
+
+                setPlayer(prev => ({
+                    ...prev,
+                    xp,
+                    level
+                }));
+            }
+        };
+        loadPlayerData();
+    }, [connected, publicKey]);
+
+    // Calculate level based on XP from Bounty Spec Formula
+    useEffect(() => {
+        const formulaLevel = Math.floor(Math.sqrt(player.xp / 100)) || 1;
+        if (formulaLevel > player.level) {
+            setPlayer(prev => ({ ...prev, level: formulaLevel }));
+            toast(`LEVEL UP! Você atingiu o Nível ${formulaLevel}! 🚀`, 'success');
         }
     }, [player.xp, player.level, toast]);
 

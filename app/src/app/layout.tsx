@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+'use client';
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "@solana/wallet-adapter-react-ui/styles.css";
@@ -8,19 +9,20 @@ import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { PlayerProvider } from "@/contexts/PlayerContext";
+import { useEffect } from "react";
+import { initAnalytics } from "@/lib/analytics";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Superteam Academy | Domine Solana",
-  description: "A melhor plataforma de aprendizado para desenvolvedores Solana no Brasil.",
-};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
     <html lang="pt">
       <body className={`${inter.className} min-h-screen flex flex-col`}>

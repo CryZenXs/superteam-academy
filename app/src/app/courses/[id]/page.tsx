@@ -104,7 +104,11 @@ export default function CourseDetailPage() {
                             Conteúdo do Curso
                         </h2>
                         {course.lessons.map((lesson, i) => (
-                            <div key={lesson.id} className="glass p-5 rounded-3xl flex items-center justify-between group hover:bg-white/5 transition-all border border-white/5">
+                            <Link
+                                key={lesson.id}
+                                href={`/courses/${id}/lessons/${lesson.id}`}
+                                className="glass p-5 rounded-3xl flex items-center justify-between group hover:bg-white/5 transition-all border border-white/5 block"
+                            >
                                 <div className="flex items-center space-x-4">
                                     <div className={cn(
                                         "w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm",
@@ -117,10 +121,10 @@ export default function CourseDetailPage() {
                                         <span className="text-xs text-white/40">{lesson.duration}</span>
                                     </div>
                                 </div>
-                                <button className="text-white/20 hover:text-white transition-colors">
+                                <div className="text-white/20 group-hover:text-solana-purple transition-colors">
                                     <PlayCircle size={24} />
-                                </button>
-                            </div>
+                                </div>
+                            </Link>
                         ))}
                     </div>
 
@@ -145,9 +149,12 @@ export default function CourseDetailPage() {
                                 <div>{'}'}</div>
                             </div>
                         </div>
-                        <button className="px-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold transition-all border border-white/10">
-                            Run Validation
-                        </button>
+                        <Link
+                            href={`/courses/${id}/lessons/challenge-1`}
+                            className="inline-block px-6 py-3 bg-solana-purple hover:bg-solana-purple/80 rounded-xl text-sm font-bold transition-all shadow-lg shadow-solana-purple/20"
+                        >
+                            Abrir no Editor Profissional
+                        </Link>
                     </div>
                 </div>
 
