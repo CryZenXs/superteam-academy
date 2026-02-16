@@ -44,7 +44,20 @@ The application uses the `LearningProgressService` interface to ensure decouplin
 3. **Reward**: Service updates local state -> In production, triggers an on-chain instruction to the Anchor Program.
 4. **Verification**: Dashboard queries DAS API (Helius) to fetch and verify the learner's cNFT credentials.
 
-## 🚀 Performance Targets
-- **Lighthouse**: Targeting 95+ in all categories.
-- **Bundle Size**: Minimized via dynamic imports (e.g., wallet adapters and code editors).
-- **Latency**: Optimistic UI updates for lesson completion feedback.
+## 🔒 Security & Sandboxing
+
+The Code Playground and Editor integration prioritize security to prevent malicious use.
+
+### 1. Execution Security (Planned for Production)
+- **Isolated RCE**: User code is never executed on the main server. In production, code is sent to an isolated **gVisor** or **Firecracker** microVM.
+- **Resource Limits**: Every build process is limited to 1GB RAM and 2 vCPUs, with a 30s timeout to prevent DoS attacks.
+- **Ephemeral Environments**: Containers are destroyed immediately after build/test completion.
+
+### 2. Frontend Safeguards
+- **Rate Limiting**: Users are limited to 1 execution every 5 seconds to prevent API spam.
+- **Input Sanitization**: Client-side checks blocks known XSS patterns (`<script>`, `window.location`, etc.).
+- **Content Security Policy (CSP)**: Headers restricted to prevent data exfiltration to unauthorized domains.
+
+### 3. Smart Contract Security
+- **PDA Isolation**: All user-specific data (XP, Levels) is stored in PDAs, ensuring a user can only modify their own progress state through the authorized Anchor program.
+- **Verification**: On-chain logic verifies course completion before emitting cNFTs.

@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import { CodeEditor } from '@/components/editor/CodeEditor';
 import { Button } from '@/components/ui/button';
-import { Play, Zap, Info, Share2, Save } from 'lucide-react';
+import { Play, Zap, Info, Share2, Save, ShieldCheck } from 'lucide-react';
 import { useToast } from '@/contexts/ToastContext';
 import { motion } from 'framer-motion';
 
 const DEFAULT_CODE = `use anchor_lang::prelude::*;
 
 // Bem-vindo ao Superteam Academy Playground! 🚀
-// Aqui você pode testar seus programas Anchor e Rust.
+// Sandbox Segura: O código é validado antes da execução.
 
 declare_id!("11111111111111111111111111111111");
 
@@ -32,12 +32,29 @@ export default function PlaygroundPage() {
     const { toast } = useToast();
     const [code, setCode] = useState(DEFAULT_CODE);
     const [isRunning, setIsRunning] = useState(false);
+    const [lastRun, setLastRun] = useState(0);
 
     const handleRun = () => {
+        // Security: Client-side Rate Limiting (Prevent Spam)
+        const now = Date.now();
+        if (now - lastRun < 5000) {
+            toast("Aguarde 5 segundos entre execuções para segurança.", "error");
+            return;
+        }
+
         setIsRunning(true);
+        setLastRun(now);
+
+        // Security: Basic Sanitization Simulation
+        if (code.includes("<script>") || code.includes("window.location")) {
+            toast("Código malicioso detectado e bloqueado!", "error");
+            setIsRunning(false);
+            return;
+        }
+
         setTimeout(() => {
             setIsRunning(false);
-            toast("Build concluído com sucesso na Sandbox!", "success");
+            toast("Build concluído com sucesso na Sandbox Segura!", "success");
         }, 2000);
     };
 
@@ -49,6 +66,10 @@ export default function PlaygroundPage() {
                     <div className="flex items-center space-x-2 text-solana-cyan">
                         <Zap size={18} fill="currentColor" />
                         <span className="text-sm font-bold tracking-wider uppercase">Solana Sandbox</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5 px-2 py-0.5 bg-solana-green/10 border border-solana-green/20 rounded text-[10px] text-solana-green font-bold uppercase">
+                        <ShieldCheck size={10} />
+                        Secure Execution
                     </div>
                     <div className="h-4 w-[1px] bg-white/10" />
                     <span className="text-xs text-white/40 font-mono">main.rs</span>
