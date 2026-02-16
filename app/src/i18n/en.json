@@ -1,0 +1,20 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success",
+        "connect_wallet": "Connect Wallet",
+        "explore": "Explore Courses"
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "courses": "Courses",
+        "leaderboard": "Leaderboard",
+        "profile": "Profile"
+    },
+    "hero": {
+        "title": "Master the Solana Ecosystem",
+        "subtitle": "The ultimate platform for Solana developers and enthusiasts in Brazil.",
+        "cta": "Start Learning"
+    }
+}

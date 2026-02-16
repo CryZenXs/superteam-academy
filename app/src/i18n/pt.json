@@ -1,0 +1,20 @@
+{
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "connect_wallet": "Conectar Carteira",
+    "explore": "Explorar Cursos"
+  },
+  "nav": {
+    "dashboard": "Painel",
+    "courses": "Cursos",
+    "leaderboard": "Ranking",
+    "profile": "Perfil"
+  },
+  "hero": {
+    "title": "Domine o Ecossistema Solana",
+    "subtitle": "A plataforma definitiva para desenvolvedores e entusiastas de Solana no Brasil.",
+    "cta": "Começar a Aprender"
+  }
+}
